@@ -1,5 +1,6 @@
 import connection from "../connection.js";
 
+// sign up
 export const signup = (req, res) => {
   const { name, email, password, age } = req.body;
 
@@ -23,6 +24,26 @@ export const signup = (req, res) => {
       }
       console.log(res);
       res.status(201).json({ message: "added" });
+    });
+  });
+};
+
+// sign in
+export const signin = (req, res) => {
+  const { email, password } = req.body;
+  const checkForUser = `SELECT * FROM users WHERE email='${email}' AND password='${password}'`;
+  connection.execute(checkForUser, (error, result) => {
+    if (error) {
+      return res.json({ error });
+    }
+    if (result.length === 0) {
+      return res.json({
+        message: "incorrect email or password",
+      });
+    }
+    res.json({
+      message: "user signin successfully",
+      user: result,
     });
   });
 };
