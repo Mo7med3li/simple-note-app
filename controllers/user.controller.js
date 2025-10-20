@@ -47,3 +47,28 @@ export const signin = (req, res) => {
     });
   });
 };
+
+// update user
+export const updateUser = (req, res) => {
+  const { name } = req.body;
+  const { id } = req.params;
+  //   check for user
+  const checkUserQuery = `SELECT * FROM users WHERE id = '${id}'`;
+
+  connection.execute(checkUserQuery, (error, result) => {
+    if (error) {
+      return res.json({ error });
+    }
+    if (result.length === 0) {
+      return res.json({ message: "user not found" });
+    }
+    const updateQuery = `UPDATE users SET name='${name}' where id ='${id}'`;
+    connection.execute(updateQuery, (error, result) => {
+      if (error) {
+        return res.json({ error });
+      }
+
+      return res.json({ message: "user updated successfully" });
+    });
+  });
+};

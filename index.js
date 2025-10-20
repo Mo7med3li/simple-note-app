@@ -1,5 +1,5 @@
 import express from "express";
-import { signin, signup } from "./controllers/user.controller.js";
+import { signin, signup, updateUser } from "./controllers/user.controller.js";
 import connection from "./connection.js";
 
 const app = express();
@@ -12,6 +12,10 @@ app.post("/signup", signup);
 
 // user signin
 app.post("/signin", signin);
+
+// update user
+app.put("/update-user/:id", updateUser);
+
 app.listen(port, () => {
   console.log(`server running in port ${port}`);
 });
