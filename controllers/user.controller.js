@@ -72,3 +72,28 @@ export const updateUser = (req, res) => {
     });
   });
 };
+
+// delete user
+export const deleteUser = (req, res) => {
+  const { id } = req.params;
+  //   check for user
+  const checkUserQuery = `SELECT * FROM users WHERE id = '${id}'`;
+
+  connection.execute(checkUserQuery, (error, result) => {
+    if (error) {
+      return res.json({ error });
+    }
+    if (result.length === 0) {
+      return res.json({ message: "user not found" });
+    }
+    // delete
+    const deleteQuery = `DELETE FROM users where id ='${id}'`;
+    connection.execute(deleteQuery, (error, result) => {
+      if (error) {
+        return res.json({ error });
+      }
+
+      return res.json({ message: "user delete successfully" });
+    });
+  });
+};
