@@ -10,6 +10,7 @@ import {
   addNote,
   getAllNotes,
   getNoteByUser,
+  getNotesWithUsers,
 } from "./controllers/note.controller.js";
 
 const app = express();
@@ -39,6 +40,9 @@ app.get("/notes", getAllNotes);
 
 // get notes by user
 app.get("/notes-by-user/:id", getNoteByUser);
+
+// get all users with notes
+app.get("/users-with-notes", getNotesWithUsers);
 
 app.listen(port, () => {
   console.log(`server running in port ${port}`);
