@@ -5,12 +5,13 @@ import {
   signup,
   updateUser,
 } from "./controllers/user.controller.js";
-import connection from "./connection.js";
 import {
   addNote,
+  deleteNote,
   getAllNotes,
   getNoteByUser,
   getNotesWithUsers,
+  updateNote,
 } from "./controllers/note.controller.js";
 
 const app = express();
@@ -43,6 +44,12 @@ app.get("/notes-by-user/:id", getNoteByUser);
 
 // get all users with notes
 app.get("/users-with-notes", getNotesWithUsers);
+
+// delete user
+app.delete("/delete-note/:id", deleteNote);
+
+// update note
+app.put("/note/:id", updateNote);
 
 app.listen(port, () => {
   console.log(`server running in port ${port}`);

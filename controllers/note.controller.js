@@ -63,3 +63,35 @@ export const getNotesWithUsers = (req, res) => {
     res.json({ message: "success", usersWithNotes: result });
   });
 };
+
+// delete user
+export const deleteNote = (req, res) => {
+  const { id } = req.params;
+
+  const deleteQuery = `DELETE FROM notes where id ='${id}'`;
+
+  connection.execute(deleteQuery, (error, result) => {
+    if (error) {
+      return res.json({ error });
+    }
+    result.affectedRows
+      ? res.json({ message: "note deleted successfully" })
+      : res.json({ message: "Note not found" });
+  });
+};
+
+// update note
+export const updateNote = (req, res) => {
+  const { title } = req.body;
+  const { id } = req.params;
+
+  const updateQuery = `UPDATE notes SET title='${title}' where id ='${id}'`;
+  connection.execute(updateQuery, (error, result) => {
+    if (error) {
+      return res.json({ error });
+    }
+    result.affectedRows
+      ? res.json({ message: "user updated successfully" })
+      : res.json({ message: "note not found" });
+  });
+};
