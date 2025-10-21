@@ -20,3 +20,32 @@ export const addNote = (req, res) => {
     });
   });
 };
+
+// get all notes
+export const getAllNotes = (req, res) => {
+  const getAllNotesQuery = `SELECT * FROM notes`;
+  connection.execute(getAllNotesQuery, (error, result) => {
+    if (error) {
+      return res.json({ error });
+    }
+    if (result.length === 0) {
+      return res.json({ message: "there aren't any notes" });
+    }
+    res.json({ message: "success", notes: result });
+  });
+};
+
+// get note by user
+export const getNoteByUser = (req, res) => {
+  const { id } = req.params;
+  const getAllNotesQuery = `SELECT * FROM notes WHERE createdBy = '${id}'`;
+  connection.execute(getAllNotesQuery, (error, result) => {
+    if (error) {
+      return res.json({ error });
+    }
+    if (result.length === 0) {
+      return res.json({ message: "the user doesn't exist" });
+    }
+    res.json({ message: "success", note: result });
+  });
+};
